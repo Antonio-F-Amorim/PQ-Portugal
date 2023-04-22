@@ -1,17 +1,11 @@
-#include "Comms2.h";
+#include "Comms2.V.0.3.h";
 
 
 
 class sensorPos {
 public:
-  void Blink(){
-    digitalWrite(LED_BUILTIN,HIGH);
-    delay(500);
-    digitalWrite(LED_BUILTIN,LOW);
-  }
   virtual bool checkSensor();
   byte id;
-
 };
 
 class sensorLocal: sensorPos{
@@ -26,10 +20,6 @@ class sensorLocal: sensorPos{
     max=maximum;
     pinMode(TriggerPin,OUTPUT);
     pinMode(EchoPin,INPUT);
-   // #ifndef  built
-    pinMode(LED_BUILTIN,OUTPUT);
-   // #endif
-    //#define Built;
   }
 
   bool checkSensor(){
@@ -41,14 +31,13 @@ class sensorLocal: sensorPos{
     delayMicroseconds(200);
       
     if( time >min && time <max ) {
-      Blink();
       return true;
     }
     else return false;
 
   }
 
-  bool checkSenorAverage(){
+  bool checkSensorAverage(){
     for(byte i=0;i<3;i++){
        if (checkSensor()) return true;
        delay(10);
@@ -60,23 +49,18 @@ class sensorLocal: sensorPos{
 class sensorParteLocal : sensorPos{
   uint16_t TriggerPin,EchoPin;
   long min,max;
-  remWrite2* sensorRemoto;
-  bool estado=false;
+  remWrite2* sender;
 
   public:
-  sensorParteLocal(uint16_t trigger, uint16_t echo,long minimum, long maximum,remWrite2* rem,byte qual){
+  sensorParteLocal(uint16_t trigger, uint16_t echo,long minimum, long maximum,remWrite2* writer,byte qual){
     TriggerPin=trigger;
     EchoPin=echo;
     min=minimum;
     max=maximum;
     id=qual;
-    sensorRemoto=rem;
+    sender=writer;
     pinMode(TriggerPin,OUTPUT);
     pinMode(EchoPin,INPUT);
-   // #ifndef  built
-    pinMode(LED_BUILTIN,OUTPUT);
-   // #endif
-    //#define Built;
   }
 
   bool checkSensor(){
@@ -88,13 +72,10 @@ class sensorParteLocal : sensorPos{
     delayMicroseconds(200);
       
     if( time >min && time <max ) {
-      Blink();
-      if(!estado) sensorRemoto->write(id);
+      sender->write(id);
       return true;
-    }
-    else { 
-	estado=0;
-	if(estado) sensorRemoto->write(id);
+    } else {
+	sender->clear(id);
 	return false;
 	}
   }
@@ -103,17 +84,15 @@ class sensorParteLocal : sensorPos{
 
 class sensorRemoto : sensorPos{
   public:
-remRead2 sensor;
- sensorRemoto(byte qual){
+remRead2* reciever;
+
+ sensorRemoto(remRead2* reader,byte qual){
    id=qual;
-   remRead2 sensor();
+   reciever=reader;
  }
 
  bool checkSensor(){
-   if(sensor.read()==id){ 
-    for(byte i=0;i<id+1;i++){
-      Blink();
-    }
+   if(reciever->read(id)){ 
     return true;
    }
 

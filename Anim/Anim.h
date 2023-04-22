@@ -23,6 +23,9 @@ class Anim {
 	uint32_t (*cor)(uint8_t step);
 	uint8_t numsteps;
 	Adafruit_NeoPixel* fita;
+	byte currentStep=0;
+	bool running=false;
+	
 	
 
 	Anim(Masc* masc,uint16_t intreval,uint32_t cordebase,uint32_t (*funccores)(uint8_t),uint8_t numerodesteps,Adafruit_NeoPixel* strips){
@@ -47,12 +50,30 @@ class Anim {
 		}
 	}
 
+	bool runStep(){
+		if(running && currentStep<numsteps){
+			this->ApplyMask(cor(currentStep));
+			currentStep++;
+			return 1;
+		} else {
+			running=0;
+			currentStep=0;
+			return 0;
+		}
+	}
+
 	void run(){
-		for(uint8_t step=0;step<numsteps;step++){
-			this->ApplyMask(cor(step));
+		begin();
+		while(runStep()){
 			delay(intrevalo);	
 		}
 	}
+	
+	void begin(){
+		running=true;
+		runStep();
+	}
+
 
 };
 
@@ -68,6 +89,18 @@ void startAll(uint16_t numPins,uint32_t cordebase,Adafruit_NeoPixel* strips){
     strips->show();
     delay(10);
   }
+}
+
+void fillAll(uint16_t numPins,uint32_t cordebase,Adafruit_NeoPixel* strips){
+  strips->fill(cordebase,0,149);
+
+  for(uint16_t i=0; i<numPins; i++){
+    strips->setPinTony(i);
+    delay(10);
+    strips->show();
+    delay(10);
+  }
+
 }
 
 
