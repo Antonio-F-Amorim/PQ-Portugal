@@ -1,10 +1,11 @@
 
-#include <Adafruit_NeoPixel.h>;
-#include "Anim.h";
-#include "Sensores.h";
-#include "mascaraTelmaArduino2.h";
+#include <Adafruit_NeoPixel.h>
+#include <Anim.h>
+#include <Sensores.h>
+#include "mascaraTelmaArduino2.h"
 #include "mascaraBecoArduino2.h"
 
+class Adafruit_NeoPixel;
 // Led objects initialization
 Adafruit_NeoPixel strip(150,1, NEO_GRB + NEO_KHZ800);
 

@@ -1,8 +1,8 @@
 
-#include <Adafruit_NeoPixel.h>;
-#include "Anim.h";
-#include "Sensores.h";
-#include "mascaraDiogo.h";
+#include <Adafruit_NeoPixel.h>
+#include <Anim.h>
+#include <Sensores.h>
+#include "mascaraDiogo.h"
 
 // Led objects initialization
 Adafruit_NeoPixel strip(150,1, NEO_GRB + NEO_KHZ800);
@@ -46,7 +46,7 @@ void loop() {
 
   if(sensorDiogo.checkSensor()){
     minhaAnimDiogoSobe.run();
-    while(sensorDiogo.checkSenorAverage()){
+    while(sensorDiogo.checkSensorAverage()){
       delay(30);
     }
     minhaAnimDiogoDesce.run();

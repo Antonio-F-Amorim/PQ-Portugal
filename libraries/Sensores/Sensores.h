@@ -1,6 +1,4 @@
-#include "Comms2.h";
-
-
+#include "Comms2.h"
 
 class sensorPos {
 public:
