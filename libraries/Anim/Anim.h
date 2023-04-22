@@ -95,9 +95,7 @@ void fillAll(uint16_t numPins,uint32_t cordebase,Adafruit_NeoPixel* strips){
 
   for(uint16_t i=0; i<numPins; i++){
     strips->setPinTony(i);
-    delay(10);
     strips->show();
-    delay(10);
   }
 
 }
