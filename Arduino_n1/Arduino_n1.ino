@@ -1,7 +1,7 @@
 
 #include <Adafruit_NeoPixel.h>;
-#include <Anim.V.0.3.h>;
-#include <Sensores.V.0.3.h>;
+#include <Anim.h>;
+#include <Sensores.h>;
 #include "mascaraTelmaArduino1.h";
 #include "mascaraBecoArduino1.h";
 
