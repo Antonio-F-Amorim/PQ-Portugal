@@ -63,7 +63,7 @@ public:
   void handShake(){
 	digitalWrite(12,HIGH);
 	while(digitalRead(13)==LOW){}
-	return true;
+	return;
    }
 
    void write(byte val){
