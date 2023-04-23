@@ -64,7 +64,7 @@ class Anim {
 	uint8_t numsteps;
 	Adafruit_NeoPixel* fita;
 	uint8_t currentStep=0;
-	bool running=false;
+	bool justFinished=0;
 	
 	void setColorDiff(){
 		Diff[0]=(corEnd.red-corStart.red);
@@ -108,15 +108,11 @@ class Anim {
 	}
 
 	bool runStep(){
-		if(running && currentStep<=numsteps){
+		if(currentStep<=numsteps){
 			this->ApplyMask(frameColor());
 			currentStep++;
 			return 1;
-		} else {
-			running=0;
-			currentStep=0;
-			return 0;
-		}
+		} else return 0;
 	}
 
 	void run(){
@@ -127,7 +123,7 @@ class Anim {
 	}
 	
 	void begin(){
-		running=true;
+		currentStep=0;
 		runStep();
 	}
 

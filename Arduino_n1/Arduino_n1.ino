@@ -9,10 +9,10 @@
 // Led objects initialization
 Adafruit_NeoPixel strip(150,1, NEO_GRB + NEO_KHZ800);
 
-Anim animTelma(&Telma,0,White,White,corTelma,40,&strip);
-Anim animApagaTelma(&Telma,0,White,corTelma,White,200,&strip);
-Anim animBeco(&Beco,0,White,White,corBeco,40,&strip);
-Anim animApagaBeco(&Beco,0,White,corBeco,White,200,&strip);
+Anim AnimTelma(&Telma,0,White,White,corTelma,60,&strip);
+Anim AnimApagaTelma(&Telma,0,White,corTelma,White,100,&strip);
+Anim AnimBeco(&Beco,0,White,White,corBeco,60,&strip);
+Anim AnimApagaBeco(&Beco,0,White,corBeco,White,100,&strip);
 //Anim minhaAnimEntrada(&Telma,150,White,&animCores,80,&strip);
 
 
@@ -30,13 +30,37 @@ void setup() {
 void loop() {
 
 reciever.update();
-  if(!animTelma.runStep() && !animApagaTelma.runStep()){ 
-    if(sensorTelma.checkSensor()) animTelma.begin();
-    else animApagaTelma.begin();
+
+ if(!AnimTelma.runStep()&&!AnimApagaTelma.runStep()){ 
+
+   if(sensorTelma.checkSensor()) {
+     if(!AnimTelma.justFinished){ 
+        AnimTelma.begin();
+        AnimTelma.justFinished=true;
+     }
+   }
+   
+   else if(AnimTelma.justFinished) {
+      AnimApagaTelma.begin();
+      AnimTelma.justFinished=false;
+    }
   }
-  if(!animBeco.runStep() && !animApagaBeco.runStep()){ 
-    if(sensorBeco.checkSensor()) animBeco.begin();
-    else animApagaBeco.begin();
+
+ if(!AnimBeco.runStep()&&!AnimApagaBeco.runStep()){ 
+
+   if(sensorBeco.checkSensor()) {
+     if(!AnimBeco.justFinished){ 
+        AnimBeco.begin();
+        AnimBeco.justFinished=true;
+     }
+   }
+   
+   else if(AnimBeco.justFinished) {
+      AnimApagaBeco.begin();
+      AnimBeco.justFinished=false;
+    }
   }
+
+
 delay(30);
 }
