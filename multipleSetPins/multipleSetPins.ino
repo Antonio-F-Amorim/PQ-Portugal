@@ -21,7 +21,7 @@ uint32_t cor= strip.Color(90,65,65);
 uint32_t preto= strip.Color(80,80,80);
 
 void loop() {
-  strip.fill(,0,149);
+  strip.fill(cor,0,149);
   
   for (uint16_t i=0;i<14;i++){
   strip.setPinTony(i);

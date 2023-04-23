@@ -6,7 +6,7 @@ Adafruit_NeoPixel strip(150,1, NEO_GRB + NEO_KHZ800);
 
 
 remWrite2 sender;
-sensorLocal sensorTelma(A0,A1,2000,8000),sensorEntrada(A2,A3,2000,8000),sensorBeco(A4,A5,2000,8000);
+sensorLocal sensorTelma(A0,A1,2000,4500),sensorEntrada(A2,A3,2000,8000),sensorBeco(A4,A5,2000,8000);
 
 uint32_t branco= strip.Color(90,65,65);
 uint32_t red= strip.Color(240,40,40);
