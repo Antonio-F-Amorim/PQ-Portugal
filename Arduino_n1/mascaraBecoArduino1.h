@@ -12,8 +12,8 @@ Masc Beco(4,pins,linhas,tamanho);
 
 
 
-byte tam[1]={8};
-byte dir[8]={10,11,12,13,14,15,16,17};
+byte tam[1]={3};
+byte dir[8]={20,21,25};
 byte* lis[1]={dir};
 uint16_t pis[1]={10};
 

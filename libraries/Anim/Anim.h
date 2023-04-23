@@ -29,10 +29,10 @@ uint8_t blue;
 
 };
 
-Cor White(90,65,65);
-Cor corTelma(240,65,65);
-Cor corDiogo(0,40,240);
-Cor corBeco(65,240,65);
+Cor White(62,23,23);
+Cor corTelma(247,32,9);
+Cor corDiogo(12,201,172);
+Cor corBeco(100,0,166);
 Cor corCoracao(240,40,0); 
 
 // Class to create a Mask for the affected pins in each strip

@@ -10,7 +10,7 @@
 Adafruit_NeoPixel strip(150,1, NEO_GRB + NEO_KHZ800);
 
 Anim AnimTelma(&Telma,0,White,White,corTelma,60,&strip);
-Anim AnimApagaTelma(&Telma,0,White,corTelma,White,100,&strip);
+Anim AnimApagaTelma(&Telma,0,White,corTelma,White,300,&strip);
 Anim AnimBeco(&Beco,0,White,White,corBeco,60,&strip);
 Anim AnimApagaBeco(&Beco,0,White,corBeco,White,100,&strip);
 
@@ -29,11 +29,13 @@ sensorRemoto sensorTelma(&reciever,1),sensorBeco(&reciever,3);
 
 void setup() {
   startAll(14,White.toUint32(),&strip);
-  delay(5000);
+  delay(1000);
 }
 
 
 void loop() {
+
+
 
 reciever.update();
 
@@ -66,7 +68,7 @@ reciever.update();
       totalBeco.justFinished=false;
     }
   }
-
+  
 
 delay(30);
 }
