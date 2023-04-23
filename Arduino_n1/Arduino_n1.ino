@@ -13,13 +13,19 @@ Anim AnimTelma(&Telma,0,White,White,corTelma,60,&strip);
 Anim AnimApagaTelma(&Telma,0,White,corTelma,White,100,&strip);
 Anim AnimBeco(&Beco,0,White,White,corBeco,60,&strip);
 Anim AnimApagaBeco(&Beco,0,White,corBeco,White,100,&strip);
-//Anim minhaAnimEntrada(&Telma,150,White,&animCores,80,&strip);
+
+Anim AnimCoracao(&Coracao,0,White,White,corCoracao,60,&strip);
+Anim AnimApagaCoracao(&Coracao,0,White,corCoracao,White,100,&strip);
+
+Anim2 totalBeco(&AnimBeco,&AnimCoracao);
+Anim2 totalApagaBeco(&AnimApagaBeco,&AnimApagaCoracao);
+
 
 
 // sensor objects initialization
 remRead2 reciever;
 sensorRemoto sensorTelma(&reciever,1),sensorBeco(&reciever,3);
-//sensorRemoto sensorEntrada(&reciever,2);
+
 
 void setup() {
   startAll(14,White.toUint32(),&strip);
@@ -46,18 +52,18 @@ reciever.update();
     }
   }
 
- if(!AnimBeco.runStep()&&!AnimApagaBeco.runStep()){ 
+ if(!totalBeco.runStep()&&!totalApagaBeco.runStep()){ 
 
    if(sensorBeco.checkSensor()) {
-     if(!AnimBeco.justFinished){ 
-        AnimBeco.begin();
-        AnimBeco.justFinished=true;
+     if(!totalBeco.justFinished){ 
+        totalBeco.begin();
+        totalBeco.justFinished=true;
      }
    }
    
-   else if(AnimBeco.justFinished) {
-      AnimApagaBeco.begin();
-      AnimBeco.justFinished=false;
+   else if(totalBeco.justFinished) {
+      totalApagaBeco.begin();
+      totalBeco.justFinished=false;
     }
   }
 

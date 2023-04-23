@@ -18,9 +18,7 @@ void setup() {
 
 startAll(12,White.toUint32(),&strip);
 delay(100);
-//minhaAnimDiogoSobe.run();
-//minhaAnimDiogoDesce.run();
-Serial.begin(9600);
+
 }
 
 

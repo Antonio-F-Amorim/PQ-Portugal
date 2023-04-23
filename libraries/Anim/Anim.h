@@ -33,7 +33,7 @@ Cor White(90,65,65);
 Cor corTelma(240,65,65);
 Cor corDiogo(0,40,240);
 Cor corBeco(65,240,65);
-Cor corcoracao(240,40,0); 
+Cor corCoracao(240,40,0); 
 
 // Class to create a Mask for the affected pins in each strip
  
@@ -126,6 +126,86 @@ class Anim {
 		currentStep=0;
 		runStep();
 	}
+
+
+};
+
+
+class Anim2{
+public:
+Anim* first;
+Anim* second;
+bool justFinished=0;
+	
+	Anim2(Anim* primeiro,Anim* segundo){
+		first=primeiro;
+		second=segundo;
+	}
+
+	byte indexSamePin(uint16_t pin){
+		for(uint16_t i=0;i<second->mascara->numPin;i++){
+		if (second->mascara->pin[i]==pin) return i;
+		}
+		return 255;
+	}
+
+	void applyMasks(){
+		for(uint16_t i=0;i<first->mascara->numPin;i++){
+			uint16_t currentFirstPin =first->mascara->pin[i];
+			uint32_t firstColor= first->frameColor();
+			first->fita->setPinTony(currentFirstPin);
+			first->fita->fill(first->corBase.toUint32(),0,149);
+
+			if(first->mascara->pos[i][0]==255) first->fita->fill(firstColor,0,149);			
+			else for(byte j=0;j<first->mascara->size[i];j++){
+				first->fita->setPixelColor((uint16_t)first->mascara->pos[i][j],firstColor);
+			}
+			
+			byte coincidentPin = indexSamePin(currentFirstPin);
+			if(coincidentPin!=255){
+				for(byte j=0;j<second->mascara->size[coincidentPin];j++){
+					first->fita->setPixelColor((uint16_t)second->mascara->pos[coincidentPin][j],second->frameColor());
+				}
+			}
+
+
+		first->fita->show();
+		}
+	}
+
+	bool runStep(){
+		bool firstRunning = first->currentStep <= first->numsteps;
+		bool secondRunning = second->currentStep <= second->numsteps;
+		if( firstRunning && secondRunning){
+			applyMasks();
+			first->currentStep++;
+			second->currentStep++;
+			return true;
+		} else if(firstRunning){
+			first->runStep();
+			return true;
+		}else if (secondRunning){
+			second->runStep();
+			return true;
+		}else {
+		return false;
+		}	
+	}
+
+
+	void begin(){
+		first->currentStep=0;
+		second->currentStep=0;
+		runStep();
+	}
+	
+	void run(){
+		begin();
+		while(runStep()){
+			delay(first->intrevalo);	
+		}
+	}
+
 
 
 };

@@ -9,3 +9,12 @@ byte* linhas[4]={tecto,esquerda,direita,frente};
 uint16_t pins[4]={6,5,10,9};
 
 Masc Beco(4,pins,linhas,tamanho);
+
+
+
+byte tam[1]={8};
+byte dir[8]={10,11,12,13,14,15,16,17};
+byte* lis[1]={dir};
+uint16_t pis[1]={10};
+
+Masc Coracao(1,pis,lis,tam);
