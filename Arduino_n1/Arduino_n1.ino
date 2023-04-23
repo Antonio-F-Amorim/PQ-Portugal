@@ -9,39 +9,11 @@
 // Led objects initialization
 Adafruit_NeoPixel strip(150,1, NEO_GRB + NEO_KHZ800);
 
-uint32_t Branco= strip.Color(90,65,65);
-
-
-uint32_t animCoresSobe (uint8_t step){
-  if(step<40) return (strip.Color(80-2*step,80-step,4*step));
-  else return Branco;
-
-}
-
-uint32_t animCoresDesce (uint8_t step){
-  if(step<40) return (strip.Color(2*step,40+step,160-2*step));
-  else return Branco;
-}
-
-uint32_t animCores (uint8_t step){
-  return strip.Color(240,40,0);
-  /*
-  if(step<40) return animCoresSobe(step);
-  if(step<80) return animCoresDesce(40+step);
-  else return Branco;
-*/
-}
-uint32_t apaga (uint8_t step){
-  return Branco;
-}
-
-
-
-Anim animTelma(&Telma,500,Branco,animCores,2,&strip);
-Anim animApagaTelma(&Telma,500,Branco,apaga,2,&strip);
-Anim animBeco(&Beco,500,Branco,animCores,2,&strip);
-Anim animApagaBeco(&Beco,500,Branco,apaga,2,&strip);
-//Anim minhaAnimEntrada(&Telma,150,Branco,&animCores,80,&strip);
+Anim animTelma(&Telma,0,White,White,corTelma,40,&strip);
+Anim animApagaTelma(&Telma,0,White,corTelma,White,200,&strip);
+Anim animBeco(&Beco,0,White,White,corBeco,40,&strip);
+Anim animApagaBeco(&Beco,0,White,corBeco,White,200,&strip);
+//Anim minhaAnimEntrada(&Telma,150,White,&animCores,80,&strip);
 
 
 // sensor objects initialization
@@ -50,7 +22,7 @@ sensorRemoto sensorTelma(&reciever,1),sensorBeco(&reciever,3);
 //sensorRemoto sensorEntrada(&reciever,2);
 
 void setup() {
-  startAll(14,Branco,&strip);
+  startAll(14,White.toUint32(),&strip);
   delay(5000);
 }
 
@@ -66,6 +38,5 @@ reciever.update();
     if(sensorBeco.checkSensor()) animBeco.begin();
     else animApagaBeco.begin();
   }
-  delay(10);
-
+delay(30);
 }
