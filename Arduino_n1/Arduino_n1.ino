@@ -68,6 +68,7 @@ reciever.update();
       totalBeco.justFinished=false;
     }
   }*/
+  reciever.update();
   if(!totalBeco.runStep()&&!totalApagaBeco.runStep()){ 
 
     if(sensorBeco.checkSensor()){

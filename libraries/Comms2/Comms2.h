@@ -68,18 +68,26 @@ public:
 
    void write(byte val){
 	if(val==0){
+	        status[0]=true;
+		status[1]=true;
+		status[2]=true;
+		send();
+		return;
+        }
+	if(status[val-1]==true) return;
+	status[val-1]=true;
+	send();
+   }
+
+   void clear (byte val){
+	if(val==0){
 	        status[0]=false;
 		status[1]=false;
 		status[2]=false;
 		send();
 		return;
         }
-	status[val-1]=true;
-	send();
-   }
-
-   void clear (byte val){
-	if(val==0) return;
+	if(status[val-1]==false) return;
 	status[val-1]=false;
 	send();
    }
