@@ -17,7 +17,7 @@ void setup() {
 
 }
 
-uint32_t cor= strip.Color(63,23,23);
+uint32_t cor= strip.Color(75,52,52);
 uint32_t preto= strip.Color(80,80,80);
 
 void loop() {

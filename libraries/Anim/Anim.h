@@ -29,7 +29,7 @@ uint8_t blue;
 
 };
 
-Cor White(62,23,23);
+Cor White(75,52,52);
 Cor corTelma(247,32,9);
 Cor corDiogo(12,201,172);
 Cor corBeco(100,0,166);
@@ -237,6 +237,29 @@ void fillAll(uint16_t numPins,uint32_t cordebase,Adafruit_NeoPixel* strips){
   }
 
 }
+
+class tempo{
+public:
+unsigned long begining=0;
+unsigned long finish=0;
+unsigned long duration=0;
+
+	tempo(unsigned long durac){
+	duration=durac;
+	}
+	
+	void start(){
+	begining=millis();	
+	}
+		
+	void correctedDelay(){
+		finish=millis();
+		unsigned long diff=finish-begining;
+		if(diff>duration) return;
+		delay(duration-(diff));
+	}
+	
+};
 
 
 

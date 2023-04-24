@@ -8,7 +8,7 @@ Adafruit_NeoPixel strip(150,1, NEO_GRB + NEO_KHZ800);
 
 
 Anim minhaAnimDiogoSobe(&Diogo,40,White,White,corDiogo,20,20,&strip);
-Anim minhaAnimDiogoDesce(&Diogo,40,White,corDiogo,White,115,20,&strip);
+Anim minhaAnimDiogoDesce(&Diogo,40,White,corDiogo,White,115,115,&strip);
 
 // sensor objects initialization
 sensorLocal sensorDiogo(A4,A5,2000,7900);

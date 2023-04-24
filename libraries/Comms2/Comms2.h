@@ -74,7 +74,7 @@ public:
 		send();
 		return;
         }
-	if(status[val-1]==true) return;
+	//if(status[val-1]==true) return;
 	status[val-1]=true;
 	send();
    }
@@ -87,7 +87,7 @@ public:
 		send();
 		return;
         }
-	if(status[val-1]==false) return;
+	//if(status[val-1]==false) return;
 	status[val-1]=false;
 	send();
    }
