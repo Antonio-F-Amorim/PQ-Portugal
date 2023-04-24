@@ -9,13 +9,13 @@
 // Led objects initialization
 Adafruit_NeoPixel strip(150,1, NEO_GRB + NEO_KHZ800);
 
-Anim AnimTelma(&Telma,0,White,White,corTelma,60,&strip);
-Anim AnimApagaTelma(&Telma,0,White,corTelma,White,300,&strip);
-Anim AnimBeco(&Beco,0,White,White,corBeco,60,&strip);
-Anim AnimApagaBeco(&Beco,0,White,corBeco,White,100,&strip);
+Anim AnimTelma(&Telma,0,White,White,corTelma,60,100,&strip);
+Anim AnimApagaTelma(&Telma,0,White,corTelma,White,300,300,&strip);
+Anim AnimBeco(&Beco,0,White,White,corBeco,60,100,&strip);
+Anim AnimApagaBeco(&Beco,0,White,corBeco,White,100,100,&strip);
 
-Anim AnimCoracao(&Coracao,0,White,White,corCoracao,60,&strip);
-Anim AnimApagaCoracao(&Coracao,0,White,corCoracao,White,100,&strip);
+Anim AnimCoracao(&Coracao,0,White,White,corCoracao,60,0,&strip);
+Anim AnimApagaCoracao(&Coracao,0,White,corCoracao,White,100,0,&strip);
 
 Anim2 totalBeco(&AnimBeco,&AnimCoracao);
 Anim2 totalApagaBeco(&AnimApagaBeco,&AnimApagaCoracao);

@@ -61,7 +61,7 @@ class Anim {
 	Cor corBase,corStart,corEnd;
 	int Diff[3];
 	
-	uint8_t numsteps;
+	uint8_t numsteps,totalsteps;
 	Adafruit_NeoPixel* fita;
 	uint8_t currentStep=0;
 	bool justFinished=0;
@@ -73,7 +73,10 @@ class Anim {
 	}
 
 	uint32_t frameColor(){
-		float factor = (float)currentStep/numsteps;
+		float factor;
+		if(currentStep<=numsteps){
+			factor = (float)currentStep/numsteps;
+		} else factor=1;
 		
 		uint8_t vermelho =(uint8_t)((float)corStart.red+(Diff[0]*factor));
 		uint8_t verde =(uint8_t)((float)corStart.green+(Diff[1]*factor));
@@ -83,13 +86,14 @@ class Anim {
 	}
 	
 
-	Anim(Masc* masc,uint16_t intreval,Cor cordebase,Cor corInicial,Cor corFinal,uint8_t numerodesteps,Adafruit_NeoPixel* strips){
+	Anim(Masc* masc,uint16_t intreval,Cor cordebase,Cor corInicial,Cor corFinal,uint8_t numerodesteps,uint8_t numerototalsteps,Adafruit_NeoPixel* strips){
 		mascara=masc;
 		intrevalo=intreval;
 		corBase=cordebase;
 		corStart=corInicial;
 		corEnd=corFinal;
 		numsteps = numerodesteps;
+		totalsteps=numerototalsteps;
 		fita=strips;
 		setColorDiff();
 	}
@@ -108,7 +112,7 @@ class Anim {
 	}
 
 	bool runStep(){
-		if(currentStep<=numsteps){
+		if(currentStep<=totalsteps){
 			this->ApplyMask(frameColor());
 			currentStep++;
 			return 1;
