@@ -46,23 +46,33 @@ void loop() {
     }
   }
 
-  
+ /* 
  if(!AnimBeco.runStep()&&!AnimApagaBeco.runStep()){ 
 
-
-if(sensorBeco.checkSensor()) {
+  if(sensorBeco.checkSensor()){
      if(!AnimBeco.justFinished){ 
         AnimBeco.begin();
         AnimBeco.justFinished=true;
      }
-   }
-   
-   else if(AnimBeco.justFinished) {
+   } else if(AnimBeco.justFinished) {
       AnimApagaBeco.begin();
       AnimBeco.justFinished=false;
     }
   }
+*/
+ if(!AnimBeco.runStep()&&!AnimApagaBeco.runStep()){ 
 
+  if(sensorBeco.checkSensor()){
+     if(!AnimBeco.justFinished){ 
+        AnimBeco.begin();
+        AnimBeco.justFinished=true;
+     } else {
+       AnimApagaBeco.begin();
+       AnimBeco.justFinished=false;
+     }
+   }
+  }
 
+    
 delay(30);
 }
