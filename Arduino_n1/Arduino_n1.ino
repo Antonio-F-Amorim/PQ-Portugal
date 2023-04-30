@@ -14,11 +14,11 @@ Anim AnimApagaTelma(&Telma,0,White,corTelma,White,50,50,&strip);
 Anim AnimBeco(&Beco,0,White,White,corBeco,30,80,&strip);
 Anim AnimApagaBeco(&Beco,0,White,corBeco,White,30,30,&strip);
 
-Anim AnimCoracao(&Coracao,0,White,White,corCoracao,30,30,&strip);
+Anim AnimCoracao(&Coracao,0,White,White,corCoracao,30,80,&strip);
 Anim AnimApagaCoracao(&Coracao,0,White,corCoracao,White,30,30,&strip);
 
-Anim2 totalBeco(&AnimBeco,&AnimCoracao,0);
-Anim2 totalApagaBeco(&AnimApagaBeco,&AnimApagaCoracao,0);
+Anim2 totalBeco(&AnimBeco,&AnimCoracao);
+Anim2 totalApagaBeco(&AnimApagaBeco,&AnimApagaCoracao);
 
 
 tempo n1Timer(80);

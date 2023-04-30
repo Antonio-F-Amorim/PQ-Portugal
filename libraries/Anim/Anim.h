@@ -139,13 +139,13 @@ class Anim2{
 public:
 Anim* first;
 Anim* second;
-bool keepWithOne=0;
 bool justFinished=0;
+
 	
-	Anim2(Anim* primeiro,Anim* segundo, bool correComUma){
+	Anim2(Anim* primeiro,Anim* segundo){
 		first=primeiro;
 		second=segundo;
-		keepWithOne=correComUma;
+
 	}
 
 	byte indexSamePin(uint16_t pin){
@@ -180,24 +180,11 @@ bool justFinished=0;
 	}
 
 	bool runStep(){
-		bool firstRunning = first->currentStep <= first->totalsteps;
-		bool secondRunning = second->currentStep <= second->totalsteps;
-		if( firstRunning && secondRunning){
+		if( first->currentStep >= first->totalsteps) return false;
 			applyMasks();
 			first->currentStep++;
 			second->currentStep++;
 			return true;
-		} else if(firstRunning){
-			first->runStep();
-			first->currentStep++;
-			if(keepWithOne)return false;
-			return true;
-		}else if (secondRunning){
-			second->runStep();
-			second->currentStep++;
-			if(keepWithOne) return false; 
-			return true;
-		}else return false;
 	}
 
 
