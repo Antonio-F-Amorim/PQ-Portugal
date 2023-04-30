@@ -50,10 +50,10 @@ class motor {
   }
 };
 
-  motor motor1(0,50,43,56,100,1);
-  motor motor2(1,50,43,56,80,1);
-  motor motor3(3,50,43,56,90,1);
-  motor motor4(4,50,43,56,110,1);
+  motor motor1(7,55,35,75,50,1);
+  motor motor2(5,62,28,85,40,1);
+  motor motor3(8,60,45,70,45,1);
+  motor motor4(11,11,1,26,65,1);
 
 
 
