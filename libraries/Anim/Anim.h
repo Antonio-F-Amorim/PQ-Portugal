@@ -63,7 +63,7 @@ class Anim {
 	
 	uint8_t numsteps,totalsteps;
 	Adafruit_NeoPixel* fita;
-	uint8_t currentStep=0;
+	uint8_t currentStep=255;
 	bool justFinished=0;
 	
 	void setColorDiff(){
@@ -139,11 +139,13 @@ class Anim2{
 public:
 Anim* first;
 Anim* second;
+bool keepWithOne=0;
 bool justFinished=0;
 	
-	Anim2(Anim* primeiro,Anim* segundo){
+	Anim2(Anim* primeiro,Anim* segundo, bool correComUma){
 		first=primeiro;
 		second=segundo;
+		keepWithOne=correComUma;
 	}
 
 	byte indexSamePin(uint16_t pin){
@@ -156,7 +158,7 @@ bool justFinished=0;
 	void applyMasks(){
 		for(uint16_t i=0;i<first->mascara->numPin;i++){
 			uint16_t currentFirstPin =first->mascara->pin[i];
-			uint32_t firstColor= first->frameColor();
+			uint32_t firstColor = first->frameColor();
 			first->fita->setPinTony(currentFirstPin);
 			first->fita->fill(first->corBase.toUint32(),0,149);
 
@@ -178,8 +180,8 @@ bool justFinished=0;
 	}
 
 	bool runStep(){
-		bool firstRunning = first->currentStep <= first->numsteps;
-		bool secondRunning = second->currentStep <= second->numsteps;
+		bool firstRunning = first->currentStep <= first->totalsteps;
+		bool secondRunning = second->currentStep <= second->totalsteps;
 		if( firstRunning && secondRunning){
 			applyMasks();
 			first->currentStep++;
@@ -187,13 +189,15 @@ bool justFinished=0;
 			return true;
 		} else if(firstRunning){
 			first->runStep();
+			first->currentStep++;
+			if(keepWithOne)return false;
 			return true;
 		}else if (secondRunning){
 			second->runStep();
+			second->currentStep++;
+			if(keepWithOne) return false; 
 			return true;
-		}else {
-		return false;
-		}	
+		}else return false;
 	}
 
 

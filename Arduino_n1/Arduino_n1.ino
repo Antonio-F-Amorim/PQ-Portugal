@@ -17,8 +17,8 @@ Anim AnimApagaBeco(&Beco,0,White,corBeco,White,30,30,&strip);
 Anim AnimCoracao(&Coracao,0,White,White,corCoracao,30,30,&strip);
 Anim AnimApagaCoracao(&Coracao,0,White,corCoracao,White,30,30,&strip);
 
-Anim2 totalBeco(&AnimBeco,&AnimCoracao);
-Anim2 totalApagaBeco(&AnimApagaBeco,&AnimApagaCoracao);
+Anim2 totalBeco(&AnimBeco,&AnimCoracao,0);
+Anim2 totalApagaBeco(&AnimApagaBeco,&AnimApagaCoracao,0);
 
 
 tempo n1Timer(80);
