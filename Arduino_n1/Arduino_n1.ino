@@ -14,13 +14,14 @@ Anim AnimApagaTelma(&Telma,0,White,corTelma,White,50,50,&strip);
 Anim AnimBeco(&Beco,0,White,White,corBeco,30,80,&strip);
 Anim AnimApagaBeco(&Beco,0,White,corBeco,White,30,30,&strip);
 
-AnimWithBeat AnimHeart(&Coracao,0,White,White,corCoracao,30,70,&strip);
+AnimWithBeat AnimHeart(&Coracao,0,White,White,corCoracao,7,80,&strip);
 
-Anim AnimCoracao(&Coracao,0,White,White,corCoracao,30,80,&strip);
+
+//Anim AnimCoracao(&Coracao,0,White,White,corCoracao,30,80,&strip);
 Anim AnimApagaCoracao(&Coracao,0,White,corCoracao,White,30,30,&strip);
 
-Anim2 totalBeco(&AnimBeco,(Anim*)&AnimHeart,1);
-Anim2 totalApagaBeco(&AnimApagaBeco,&AnimApagaCoracao,0);
+Anim2 totalBeco(&AnimBeco,(Anim*)&AnimHeart);
+Anim2 totalApagaBeco(&AnimApagaBeco,&AnimApagaCoracao);
 
 
 tempo n1Timer(80);
@@ -86,14 +87,14 @@ if(!AnimTelma.runStep()&&!AnimApagaTelma.runStep()){
      }
    }
   }*/
- if(!totalBeco.runStep()&&!totalApagaBeco.runStep()){ 
+ if(!totalBeco.runStepNonStop()&&!totalApagaBeco.runStep()){ 
 
     if(sensorBeco.checkSensor()){
      if(!totalBeco.justFinished){ 
         totalBeco.begin();
         totalBeco.justFinished=true;
      } else {
-       AnimHeart.stop();
+       totalBeco.isRunning=0;
        totalApagaBeco.begin();
        totalBeco.justFinished=false;
      }

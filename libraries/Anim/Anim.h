@@ -63,7 +63,7 @@ class Anim {
 	
 	uint8_t numsteps,totalsteps;
 	Adafruit_NeoPixel* fita;
-	uint8_t currentStep;
+	uint8_t currentStep=255;
 	bool justFinished=0;
 	
 	void setColorDiff(){
@@ -81,7 +81,8 @@ class Anim {
 		uint8_t vermelho =(uint8_t)((float)corStart.red+(Diff[0]*factor));
 		uint8_t verde =(uint8_t)((float)corStart.green+(Diff[1]*factor));
 		uint8_t azul =(uint8_t)((float)corStart.blue+(Diff[2]*factor));
-   
+   		
+		if(currentStep>=253) currentStep=253;
 		return Cor(vermelho,verde,azul).toUint32();
 	}
 	
@@ -94,7 +95,6 @@ class Anim {
 		corEnd=corFinal;
 		numsteps = numerodesteps;
 		totalsteps=numerototalsteps;
-		currentStep=255;
 		fita=strips;
 		setColorDiff();
 	}
@@ -144,42 +144,43 @@ public:
 			,Adafruit_NeoPixel* strips):Anim (masc,intreval,cordebase,corInicial
 			,corFinal,numerodesteps,numerototalsteps,strips){}
 
-	uint32_t frameColor() override;
 
-	void stop(){
-	this->currentStep=255;
-	}
-};
-
-	uint32_t AnimWithBeat::frameColor() {
-		
+	uint32_t frameColor() {
+		if(currentStep>=253) currentStep=253;
 		float factor;
 		if(currentStep<=numsteps){
 			factor = (float)currentStep/numsteps;
+		} else if(currentStep<=(2*numsteps)){
+			factor = 1.0;
 		} else {
-			factor= (  1.0- ((float)(currentStep-numsteps))/numsteps);
+			factor= ( 1.0- ((float)(currentStep-numsteps*2))/numsteps);
 		}
-		Serial.println(factor);
+		
 		uint8_t vermelho =(uint8_t)((float)corStart.red+(Diff[0]*factor));
 		uint8_t verde =(uint8_t)((float)corStart.green+(Diff[1]*factor));
 		uint8_t azul =(uint8_t)((float)corStart.blue+(Diff[2]*factor));
    		
-		if(currentStep>=2*numsteps) currentStep=0;
+		if(currentStep>=3*numsteps) currentStep=0;
 		
 		return Cor(vermelho,verde,azul).toUint32();
 	}
+
+};
+
+
+
+
 
 class Anim2{
 public:
 Anim* first;
 Anim* second;
-bool keepWithOne=0;
 bool justFinished=0;
+bool isRunning=0;
 	
-	Anim2(Anim* primeiro,Anim* segundo, bool correComUma){
+	Anim2(Anim* primeiro,Anim* segundo){
 		first=primeiro;
 		second=segundo;
-		keepWithOne=correComUma;
 	}
 
 	byte indexSamePin(uint16_t pin){
@@ -213,29 +214,29 @@ bool justFinished=0;
 		}
 	}
 
+	bool runStepNonStop(){
+			if(isRunning){
+				applyMasks();
+				first->currentStep++;
+				second->currentStep++;
+				if(first->currentStep >= first->totalsteps) return false;
+				return true;
+			} else return false;
+	}
+
 	bool runStep(){
-		bool firstRunning = first->currentStep <= first->numsteps;
-		bool secondRunning = second->currentStep <= second->numsteps;
-		if( firstRunning && secondRunning){
-			applyMasks();
-			first->currentStep++;
-			second->currentStep++;
-			return true;
-		} else if(firstRunning){
-			first->runStep();
-			if(keepWithOne)return false;
-			return true;
-		}else if (secondRunning){
-			second->runStep();
-			if(keepWithOne) return false; 
-			return true;
-		}else {
-		return false;
-		}	
+			if(first->currentStep<= first->totalsteps){
+				applyMasks();
+				first->currentStep++;
+				second->currentStep++;
+				return true;
+
+			}else return false;
 	}
 
 
 	void begin(){
+		isRunning=true;
 		first->currentStep=0;
 		second->currentStep=0;
 		runStep();
