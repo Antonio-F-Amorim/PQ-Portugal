@@ -219,7 +219,7 @@ void startAll(uint16_t numPins,uint32_t cordebase,Adafruit_NeoPixel* strips){
     pinMode(i,OUTPUT);
   }
   strips->fill(cordebase,0,149);
-
+    delay(500);
   for(uint16_t i=0; i<numPins; i++){
     strips->setPinTony(i);
     delay(10);
