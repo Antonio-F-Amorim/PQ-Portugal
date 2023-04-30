@@ -139,11 +139,13 @@ class Anim2{
 public:
 Anim* first;
 Anim* second;
+bool keepWithOne=0;
 bool justFinished=0;
 	
-	Anim2(Anim* primeiro,Anim* segundo){
+	Anim2(Anim* primeiro,Anim* segundo, bool correComUma){
 		first=primeiro;
 		second=segundo;
+		keepWithOne=correComUma;
 	}
 
 	byte indexSamePin(uint16_t pin){
@@ -187,9 +189,11 @@ bool justFinished=0;
 			return true;
 		} else if(firstRunning){
 			first->runStep();
+			if(keepWithOne)return false;
 			return true;
 		}else if (secondRunning){
 			second->runStep();
+			if(keepWithOne) return false; 
 			return true;
 		}else {
 		return false;
