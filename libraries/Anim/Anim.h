@@ -63,7 +63,7 @@ class Anim {
 	
 	uint8_t numsteps,totalsteps;
 	Adafruit_NeoPixel* fita;
-	uint8_t currentStep=0;
+	uint8_t currentStep;
 	bool justFinished=0;
 	
 	void setColorDiff(){
@@ -72,7 +72,7 @@ class Anim {
 		Diff[2]=(corEnd.blue-corStart.blue);
 	}
 
-	uint32_t frameColor(){
+	virtual uint32_t frameColor(){
 		float factor;
 		if(currentStep<=numsteps){
 			factor = (float)currentStep/numsteps;
@@ -94,6 +94,7 @@ class Anim {
 		corEnd=corFinal;
 		numsteps = numerodesteps;
 		totalsteps=numerototalsteps;
+		currentStep=255;
 		fita=strips;
 		setColorDiff();
 	}
@@ -134,6 +135,39 @@ class Anim {
 
 };
 
+class AnimWithBeat : public Anim{
+public:
+
+
+	AnimWithBeat(Masc* masc,uint16_t intreval,Cor cordebase,Cor corInicial,Cor corFinal
+			,uint8_t numerodesteps,uint8_t numerototalsteps
+			,Adafruit_NeoPixel* strips):Anim (masc,intreval,cordebase,corInicial
+			,corFinal,numerodesteps,numerototalsteps,strips){}
+
+	uint32_t frameColor() override;
+
+	void stop(){
+	this->currentStep=255;
+	}
+};
+
+	uint32_t AnimWithBeat::frameColor() {
+		
+		float factor;
+		if(currentStep<=numsteps){
+			factor = (float)currentStep/numsteps;
+		} else {
+			factor= (  1.0- ((float)(currentStep-numsteps))/numsteps);
+		}
+		Serial.println(factor);
+		uint8_t vermelho =(uint8_t)((float)corStart.red+(Diff[0]*factor));
+		uint8_t verde =(uint8_t)((float)corStart.green+(Diff[1]*factor));
+		uint8_t azul =(uint8_t)((float)corStart.blue+(Diff[2]*factor));
+   		
+		if(currentStep>=2*numsteps) currentStep=0;
+		
+		return Cor(vermelho,verde,azul).toUint32();
+	}
 
 class Anim2{
 public:

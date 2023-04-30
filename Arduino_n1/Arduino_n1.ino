@@ -14,10 +14,12 @@ Anim AnimApagaTelma(&Telma,0,White,corTelma,White,50,50,&strip);
 Anim AnimBeco(&Beco,0,White,White,corBeco,30,80,&strip);
 Anim AnimApagaBeco(&Beco,0,White,corBeco,White,30,30,&strip);
 
-Anim AnimCoracao(&Coracao,0,White,White,corCoracao,30,30,&strip);
+AnimWithBeat AnimHeart(&Coracao,0,White,White,corCoracao,30,70,&strip);
+
+Anim AnimCoracao(&Coracao,0,White,White,corCoracao,30,80,&strip);
 Anim AnimApagaCoracao(&Coracao,0,White,corCoracao,White,30,30,&strip);
 
-Anim2 totalBeco(&AnimBeco,&AnimCoracao,0);
+Anim2 totalBeco(&AnimBeco,(Anim*)&AnimHeart,1);
 Anim2 totalApagaBeco(&AnimApagaBeco,&AnimApagaCoracao,0);
 
 
@@ -31,6 +33,8 @@ sensorRemoto sensorTelma(&reciever,1),sensorBeco(&reciever,3);
 void setup() {
   startAll(14,White.toUint32(),&strip);
   delay(2000);
+  Serial.begin(9600);
+  delay(100);
 }
 
 
@@ -89,6 +93,7 @@ if(!AnimTelma.runStep()&&!AnimApagaTelma.runStep()){
         totalBeco.begin();
         totalBeco.justFinished=true;
      } else {
+       AnimHeart.stop();
        totalApagaBeco.begin();
        totalBeco.justFinished=false;
      }
