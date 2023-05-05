@@ -33,7 +33,10 @@ Cor White(75,52,52);
 Cor corTelma(247,32,9);
 Cor corDiogo(12,201,172);
 Cor corBeco(100,0,166);
-Cor corCoracao(240,40,0); 
+Cor corCoracaoDim(128,22,0);// laranja mais fraco
+
+Cor corCoracao(255,52,9);
+//Cor corCoracao(240,40,0); 
 
 // Class to create a Mask for the affected pins in each strip
  

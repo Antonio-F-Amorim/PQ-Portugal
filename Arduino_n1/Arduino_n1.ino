@@ -14,7 +14,7 @@ Anim AnimApagaTelma(&Telma,0,White,corTelma,White,50,50,&strip);
 Anim AnimBeco(&Beco,0,White,White,corBeco,30,80,&strip);
 Anim AnimApagaBeco(&Beco,0,White,corBeco,White,30,30,&strip);
 
-AnimWithBeat AnimHeart(&Coracao,0,White,White,corCoracao,7,80,&strip);
+AnimWithBeat AnimHeart(&Coracao,0,White,corCoracaoDim,corCoracao,7,80,&strip);
 
 
 //Anim AnimCoracao(&Coracao,0,White,White,corCoracao,30,80,&strip);
