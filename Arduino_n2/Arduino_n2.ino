@@ -13,7 +13,7 @@ Adafruit_NeoPixel strip(150,1, NEO_GRB + NEO_KHZ800);
 
 Anim AnimTelma(&Telma,0,White,White,corTelma,30,150,&strip);
 Anim AnimApagaTelma(&Telma,0,White,corTelma,White,50,50,&strip);
-Anim AnimBeco(&Beco,0,White,White,corBeco,30,80,&strip);
+Anim AnimBeco(&Beco,0,White,White,corBeco,30,60,&strip);
 Anim AnimApagaBeco(&Beco,0,White,corBeco,White,30,30,&strip);
 
 tempo n2Timer(80);
